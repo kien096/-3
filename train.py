@@ -81,7 +81,7 @@ def train(train_df, FOLD: int = 1, data_path: str = PATH_DATA, input_shape_image
     # device = torch.device('cpu')
 
     # Load model
-    loaded_model = timm.create_model(model_name, pretrained=weights, num_classes=NUMBER_CLASSES,
+    loaded_model = timm.create_model(model_name, pretrained=weights, num_classes=5,
                                      in_chans=input_shape_image[0])
 
     # loaded_model = load_model_weigts(weights=WEIGHTS_SPEECH, model_name=MODEL_NAME, num_classes=NUMBER_CLASSES,
@@ -184,7 +184,7 @@ def train(train_df, FOLD: int = 1, data_path: str = PATH_DATA, input_shape_image
                 metric_print = log_tensorboard(tensorboard, train_metric=epoch_metrics, val_metric=val_epoch_metrics,
                                 epoch_loss=epoch_loss, val_epoch_loss=val_epoch_loss,
                                 train_metric_each_class=epoch_metrics_each_class,
-                                val_metric_each_class=val_epoch_metrics_each_class, class_json=cl_json,
+                                val_metric_each_class=val_epoch_metrics_each_class, 
                                 num_epoch=epoch, log=log, log_echa_metrics=True, save_logs_class_nun_epoch=10)
 
                 print(metric_print)
