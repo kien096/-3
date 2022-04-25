@@ -8,7 +8,7 @@ def number(num, digits=4) -> float:
 
 
 def log_tensorboard(tensorboard, train_metric, val_metric, num_epoch, train_metric_each_class=None, log=None,
-                    val_metric_each_class=None, class_json=None, epoch_loss=None, val_epoch_loss=None,
+                    val_metric_each_class=None, epoch_loss=None, val_epoch_loss=None,
                     log_echa_metrics: bool = False, save_logs_class_nun_epoch: int = 10) -> Dict:
     """
     :param tensorboard: tensorboard object for entering information.
@@ -46,18 +46,6 @@ def log_tensorboard(tensorboard, train_metric, val_metric, num_epoch, train_metr
             log.update_metric([val_or_train + '_' + name_draw, value_tensor.item()], num_epoch)
             print_metric[val_or_train + '_' + name_draw] = number(value_tensor.item())
             tensorboard.add_scalars(name_draw, dict_with_data, num_epoch)
-
-    if class_json is not None:
-        dict_for_each_class = {}
-        for all_metrcis in [train_metric_each_class.items(), val_metric_each_class.items()]:
-            for name_metric, value_tensor in all_metrcis:
-                for i in range(NUMBER_CLASSES):
-                    name_class = list(class_json.keys())[list(class_json.values()).index(i)]
-                    dict_for_each_class[name_class]=value_tensor[i].item()
-
-                if log_echa_metrics and num_epoch % save_logs_class_nun_epoch == 0:
-                    log.update_metric([name_metric + '_Classes', dict_for_each_class], num_epoch)
-                tensorboard.add_scalars(name_metric + '_Classes', dict_for_each_class, num_epoch)
 
     log.save_json()
 
